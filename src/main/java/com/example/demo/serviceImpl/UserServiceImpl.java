@@ -1,56 +1,45 @@
 package com.example.demo.serviceImpl;
-
-import java.util.ArrayList;
 import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.User;
 import com.example.demo.exception.UserNotFoundException;
+import com.example.demo.repository.UserRepo;
 import com.example.demo.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService{
+	@Autowired
+	private UserRepo userRepo;
 	
-	List<User> al = new ArrayList<>();
-
 	@Override
 	public User createUser(User user) {
-		al.add(user);
-		return user;
-	}
+		return userRepo.save(user);}
 	
 	@Override
 	public List<User> getAllUsers() {
-		
-		return al;
-	}
+		return userRepo.findAll();}
 	
 	@Override
 	public User updateUser(String id, User user) {
-		
-		for(User u:al)
-		{
-			if(u.getId().equals(id))
-			{
-				u.setName(user.getName());
-				u.setUserName(user.getUserName());
-				return u;
-			}
+		User user1=userRepo.findById(id).get();
+		if(user1!=null)
+		{			
+			user1.setName(user.getName());
+			user1.setUserName(user.getUserName());
+			userRepo.save(user1);
+			return user1;
 		}
-		
 		throw new UserNotFoundException("Invalid ID: User not found");
 	}
-
 	@Override
 	public User deleteUser(String id) {
-		for(User u:al)
+		User user2=userRepo.findById(id).get();
+		if(user2!=null)
 		{
-			if(u.getId().equals(id))
-			{
-				al.remove(u);
-				return u;
-			}
+			userRepo.delete(user2);
+			return user2;
 		}
 		throw new UserNotFoundException("Invalid ID: User not found");
 	}
