@@ -50,9 +50,11 @@ public class ViewController {
 	public String AuthUser(@RequestParam String userName, @RequestParam String password, Model model) {
 	
 		User user = userService.UserAuth(userName, password);
+		System.out.println(user.getName());
 		if (user != null)
 		{
 			model.addAttribute("user",user); 
+			
 		return "home"; 
 		}
 	

@@ -65,8 +65,12 @@
 
 <!-- Main Content -->
 <div class="container text-center">
-   <h1>Welcome <% User user=(User)request.getAttribute("name"); %>!</h1>
-   <p><%= user != null ? user.getName() : "Khushi Singh" %></p>
+   <h1>Welcome <% User user=(User)request.getAttribute("user"); %>!</h1>
+   <p><%= user.getName() %></p>
+    <p><%= user.getId() %></p>
+     <p><%= user.getPassword() %></p>
+     <p><%= user.getUserName() %></p>
+     
    <p class="lead">You have successfully logged in.</p>
 </div>
 
